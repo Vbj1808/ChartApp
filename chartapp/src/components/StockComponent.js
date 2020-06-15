@@ -1,11 +1,34 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
+import {fetchStocks} from '../redux';
 
-function StockComponent(){
-    return(
+function StockComponent({ stockData, fetchStocks}){
+    useEffect(() => {
+        fetchStocks()
+    }, [])
+    return  (
         <div>
-            <h1>Stock</h1>
+            <h2>Stock List</h2>
+            <div>
+                {stockData && 
+                stockData.stocks && 
+                stockData.stocks.map(stock => <p>{stock.MetaData}</p>)}
+            </div>
+
         </div>
     )
 }
 
-export default StockComponent;
+const mapStateToProps = state => {
+    return{
+        stockData: state.stock 
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return{
+        fetchStocks: () => dispatch(fetchStocks())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(StockComponent)
