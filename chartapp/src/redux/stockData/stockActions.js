@@ -4,7 +4,7 @@ import {
     FETCH_STOCK_SUCCESS,
     FETCH_STOCK_REQUEST
 } from './stockTypes'
-import { FETCH_USERS_FAILURE } from '../../../../../REACT-REDUX-DEMO/cakeshop/src/redux/user/userTypes';
+
 
 export const fetchStock = (symbol) => async dispatch => {
     const API_KEY = 'BNQAM0M12SG9BFOM';

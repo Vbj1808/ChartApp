@@ -1,35 +1,20 @@
+import {
+    FETCH_STOCK_SUCCESS
+} from './stockTypes'
+
 const initialState = {
-    loading : false,
-    data : [],
-    error: ''
-}
+    dailyStock: null 
+};
 
-
-const reducer = (state=initialState, action) => {
+export default function (state = initialState, action){
     const {type, payload} = action;
-    switch(type){
-        case "FETCH_STOCK_REQUEST":
-            return{
-                ...state,
-                loading: true 
-            }
-        case "FETCH_STOCK_SUCCESS":
-            return{
-                ...state,
-                loading: false,
-                data: action.payload,
-                error: ''
-            }
-        case "FETCH_STOCK_FAILURE":
-            return{
-                loading: false,
-                stocks: [],
-                error: action.payload
-            }
-        default: return state
+
+    if(type === FETCH_STOCK_SUCCESS){
+        return{
+            ...state,
+            dailyStock: payload
+        };
+    }else{
+        return state 
     }
-    return state;
 }
-
-
-export default reducer
