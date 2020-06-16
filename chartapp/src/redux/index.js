@@ -1,6 +1,10 @@
 import {combineReducers} from 'redux';
 import dailyStock from './stockData/stockReducer';
+import nftyStock from './nftyData/nftyReducer';
 
-export default combineReducers({
-    dailyStock
+const rootReducer =  combineReducers({
+    dailyStock: dailyStock,
+    nftyStock: nftyStock
 })
+
+export default rootReducer;

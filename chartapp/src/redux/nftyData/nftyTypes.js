@@ -1,0 +1,2 @@
+
+export const FETCH_NFTY_SUCCESS = 'FETCH_STOCK_SUCCESS'

@@ -5,6 +5,10 @@ import {
     FETCH_STOCK_REQUEST
 } from './stockTypes'
 
+function prepareDate(d){
+    return Date.parse(d);
+}
+
 
 export const fetchStock = (symbol) => async dispatch => {
     const API_KEY = 'BNQAM0M12SG9BFOM';
@@ -16,28 +20,34 @@ export const fetchStock = (symbol) => async dispatch => {
     let stockChartOpenValues = [];
     let stockChartHighValues = [];
     let stockChartLowValues = [];
+    let stockChartVolumeValues = [];
 
     try{
-        await axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${stockSymbol}&interval=5min&outputsize=full&apikey=${API_KEY}`)
+        await fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stockSymbol}&outputsize=full&apikey=${API_KEY}`)
             .then(
                 function(response){
                     return response.json();
                 }
             )
             .then(
+                
                 function(data){
                     console.log(data);
 
                     for(let key in data['Time Series (Daily)']) {
-                        stockChartXValues.push(key);
-                        stockChartCloseValues.push(data['Time Series (Daily)'][key]['4. close']);
-                        stockChartOpenValues.push(data['Time Series (Daily)'][key]['1. open']);
-                        stockChartHighValues.push(data['Time Series (Daily)'][key]['2. high']);
-                        stockChartLowValues.push(data['Time Series (Daily)'][key]['3. low']);
+                        let d = prepareDate(key);
+                        stockChartXValues.push(d);
+                        stockChartCloseValues.push(Number(data['Time Series (Daily)'][key]['4. close']));
+                        stockChartOpenValues.push(Number(data['Time Series (Daily)'][key]['1. open']));
+                        stockChartHighValues.push(Number(data['Time Series (Daily)'][key]['2. high']));
+                        stockChartLowValues.push(Number(data['Time Series (Daily)'][key]['3. low']));
+                        stockChartVolumeValues.push(Number(data['Time Series (Daily)'][key]['6. volume']));
 
                     }
                 }
             )
+
+        
         
         const dailyStock = {
             symbol: stockSymbol,
@@ -45,7 +55,8 @@ export const fetchStock = (symbol) => async dispatch => {
             stockChartCloseData: stockChartCloseValues,
             stockChartOpenData: stockChartOpenValues,
             stockChartHighData: stockChartHighValues,
-            stockChartLowData: stockChartLowValues 
+            stockChartLowData: stockChartLowValues,
+            stockChartVolumeData: stockChartVolumeValues 
         };
 
         dispatch({
