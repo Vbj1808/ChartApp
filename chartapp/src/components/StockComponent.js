@@ -2,36 +2,16 @@ import React, {useRef, useState, useLayoutEffect, useEffect} from 'react';
 import StockChart from './StockChart';
 import NftyChart from './NftyChart';
 import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types'
 import Header from './HeaderComponent';
-import {Input} from 'reactstrap';
+import {Input, Button} from 'reactstrap';
 import {fetchNfty} from '../redux/nftyData/nftyAction';
 import {fetchStock} from '../redux/stockData/stockActions';
 
-const NftyComponent = ({ nftyStock:{nftyStock}, fetchNfty}) => {
-    const firstUpdate = useRef(true);
-    useLayoutEffect(() => {
-        if(firstUpdate.current){
-            firstUpdate.current = false;
-            fetchNfty('nfty');
-            return;
-        }
-    }, []);
-    const displayTheNfty = () => {
-        return(
-            <NftyChart nftyStock={nftyStock} nftyStockName={nftyStock.symbol} />
-        );
-    }
-    return(
-        <div>
-            {nftyStock ? displayTheNfty() : null}
-        </div>
-    )
-}
-
 
 const StockComponent = ({dailyStock:{dailyStock}, fetchStock}) => {
-    
+   
     const [symbol,setSymbol] = useState('IBM');
     useEffect(() => {
         fetchStock(symbol);
@@ -43,8 +23,7 @@ const StockComponent = ({dailyStock:{dailyStock}, fetchStock}) => {
         
     }
     console.log(symbol);
-   
-
+    
     
 
     const displayTheChart = () => {
@@ -54,7 +33,6 @@ const StockComponent = ({dailyStock:{dailyStock}, fetchStock}) => {
     }
 
     
-
     
     return(
         <>
@@ -66,8 +44,9 @@ const StockComponent = ({dailyStock:{dailyStock}, fetchStock}) => {
                 <option value="AMZN">AMZN</option>
             </Input>
             {dailyStock ? displayTheChart() : null}
-            <h1>Average Stock</h1>
-            <NftyComponent />
+            <Link to={`/nfty`}>
+                <Button outline="none" color="danger" >Click to see nfty stock</Button>
+            </Link>
         </div>
         </>
     )
@@ -76,11 +55,12 @@ const StockComponent = ({dailyStock:{dailyStock}, fetchStock}) => {
 
 StockComponent.propTypes = {
     dailyStock: PropTypes.object.isRequired,
-    fetchStock: PropTypes.func.isRequired
+    fetchStock: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
-    dailyStock: state.dailyStock
+    dailyStock: state.dailyStock,
+
 })
 
 export default connect(mapStateToProps,{fetchStock})(StockComponent);

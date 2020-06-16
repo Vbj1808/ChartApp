@@ -7,17 +7,17 @@ const StockChart = ({dailyStock,dailyStockName}) => {
     console.log(dailyStock.stockChartCloseData);
     console.log(dailyStock.stockChartXData);
     
-    var ohlc = [],
-        volume = [],
-        dataLength = dailyStock.stockChartXData.length,
-        i = 0;
+    var ohlc = [];
+    var volume = [];
+    var dataLength = dailyStock.stockChartXData.length;
+    var i = 0;
     
     console.log(dataLength);
     
     console.log(dailyStock.stockChartXData[0]);
 
 
-    for(i=dataLength; i>0; i-=1){
+    for(i=dataLength; i>0; i--){
         ohlc.push([
             dailyStock.stockChartXData[i],
             dailyStock.stockChartOpenData[i],
@@ -89,12 +89,12 @@ const StockChart = ({dailyStock,dailyStockName}) => {
         series: [{
             type: 'ohlc',
             id: `{dailyStock.symbol}-ohlc`,
-            name: `{dailyStock.symbol} Stock Price`,
+            name: dailyStock.symbol,
             data: ohlc,
         },{
             type: 'column',
             id: `{dailyStock.symbol}-volume`,
-            name: `{dailyStock.symbol} Volume`,
+            name: dailyStock.symbol ,
             data: volume,
             yAxis: 1
         }
