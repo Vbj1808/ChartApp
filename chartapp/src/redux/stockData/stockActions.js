@@ -1,47 +1,58 @@
 import axios from 'axios'
 import {
-    FETCH_STOCK_REQUEST,
+    FETCH_STOCK_FAILURE,
     FETCH_STOCK_SUCCESS,
-    FETCH_STOCK_FAILURE
+    FETCH_STOCK_REQUEST
 } from './stockTypes'
+import { FETCH_USERS_FAILURE } from '../../../../../REACT-REDUX-DEMO/cakeshop/src/redux/user/userTypes';
 
-export const fetchStockRequest = () => {
-    return{
-        type: FETCH_STOCK_REQUEST
-    }
-}
-
-
-const fetchStockSuccess = stocks => {
-    return{
-        type: FETCH_STOCK_SUCCESS,
-        payload: stocks
-    }
-}
-
-const fetchStockFailure = error => {
-    return{
-        type: FETCH_STOCK_FAILURE,
-        payload: error 
-    }
-}
-
-
-
-export const fetchStocks = () => {
+export const fetchStock = (symbol) => async dispatch => {
     const API_KEY = 'BNQAM0M12SG9BFOM';
-    const API_CALL = `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=IBM&interval=5min&outputsize=full&apikey=${API_KEY}` 
-    return (dispatch) => {
-        dispatch(fetchStockRequest)
+
+    let stockSymbol = symbol;
+
+    let stockChartXValues = [];
+    let stockChartCloseValues = [];
+    let stockChartOpenValues = [];
+    let stockChartHighValues = [];
+    let stockChartLowValues = [];
+
+    try{
+        await axios.get(`https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=${stockSymbol}&interval=5min&outputsize=full&apikey=${API_KEY}`)
+            .then(
+                function(response){
+                    return response.json();
+                }
+            )
+            .then(
+                function(data){
+                    console.log(data);
+
+                    for(let key in data['Time Series (Daily)']) {
+                        stockChartXValues.push(key);
+                        stockChartCloseValues.push(data['Time Series (Daily)'][key]['4. close']);
+                        stockChartOpenValues.push(data['Time Series (Daily)'][key]['1. open']);
+                        stockChartHighValues.push(data['Time Series (Daily)'][key]['2. high']);
+                        stockChartLowValues.push(data['Time Series (Daily)'][key]['3. low']);
+
+                    }
+                }
+            )
         
-        axios.get(API_CALL)
-            .then(response => {
-                const stocks = response.data
-                dispatch(fetchStockSuccess(stocks))
-            })
-            .catch(error => {
-                const errorMsg = error.message
-                dispatch(fetchStockFailure(errorMsg))
-            })
+        const dailyStock = {
+            symbol: stockSymbol,
+            stockChartXData: stockChartXValues,
+            stockChartCloseData: stockChartCloseValues,
+            stockChartOpenData: stockChartOpenValues,
+            stockChartHighData: stockChartHighValues,
+            stockChartLowData: stockChartLowValues 
+        };
+
+        dispatch({
+            type: FETCH_STOCK_SUCCESS,
+            payload: dailyStock
+        })
+    }catch(e){
+        console.log(e)
     }
 }

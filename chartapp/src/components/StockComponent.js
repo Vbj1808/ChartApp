@@ -1,34 +1,32 @@
-import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
-import {fetchStocks} from '../redux';
+import React, { useState } from 'react';
+import Highcharts from 'highcharts/highstock'
+import HighchartsReact from 'highcharts-react-official'
+import { useDispatch, useSelector } from 'react-redux';
+import {Input } from 'reactstrap';
+import '../App.css'
+import { getData } from '../redux/stockData/stockActions';
 
-function StockComponent({ stockData, fetchStocks}){
-    useEffect(() => {
-        fetchStocks()
-    }, [])
-    return  (
-        <div>
-            <h2>Stock List</h2>
-            <div>
-                {stockData && 
-                stockData.stocks && 
-                stockData.stocks.map(stock => <p>{stock.MetaData}</p>)}
-            </div>
+function StockComponent(){
+    const dispatch = useDispatch();
+    const state = useSelector(state => state.stock)
+    const [symbol, setSymbol] = useState('IBM');
 
+    const fetchData = (symbol) => {
+        dispatch(getData({
+            symbol: symbol
+        }))
+    }
+    
+    return(
+        <div className="container">
+            <Input type="select" name="symbol" id="symbol" onChange={e => setSymbol(e.target.value)}>
+                <option>IBM</option>
+                <option>AMZN</option>
+                <option>VBJ</option>
+            </Input>
         </div>
     )
 }
 
-const mapStateToProps = state => {
-    return{
-        stockData: state.stock 
-    }
-}
 
-const mapDispatchToProps = dispatch => {
-    return{
-        fetchStocks: () => dispatch(fetchStocks())
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(StockComponent)
+export default StockComponent;

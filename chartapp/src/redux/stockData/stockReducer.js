@@ -1,30 +1,26 @@
-import {
-    FETCH_STOCK_REQUEST,
-    FETCH_STOCK_SUCCESS,
-    FETCH_STOCK_FAILURE
-} from './stockTypes'
-
 const initialState = {
     loading : false,
-    stocks : [],
+    data : [],
     error: ''
 }
 
 
 const reducer = (state=initialState, action) => {
-    switch(action.type){
-        case FETCH_STOCK_REQUEST:
+    const {type, payload} = action;
+    switch(type){
+        case "FETCH_STOCK_REQUEST":
             return{
                 ...state,
                 loading: true 
             }
-        case FETCH_STOCK_SUCCESS:
+        case "FETCH_STOCK_SUCCESS":
             return{
+                ...state,
                 loading: false,
-                stocks: action.payload,
+                data: action.payload,
                 error: ''
             }
-        case FETCH_STOCK_FAILURE:
+        case "FETCH_STOCK_FAILURE":
             return{
                 loading: false,
                 stocks: [],
@@ -32,6 +28,7 @@ const reducer = (state=initialState, action) => {
             }
         default: return state
     }
+    return state;
 }
 
 
