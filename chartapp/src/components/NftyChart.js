@@ -9,7 +9,7 @@ const NftyChart = ({nftyStock,nftyStockName}) => {
     
     var ohlc = [],
         volume = [],
-        dataLength = nftyStock.nftyChartXData.length,
+        dataLength = nftyStock.nftyChartCloseData.length,
         i = 0;
     
     console.log(dataLength);

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {
+    FETCH_NFTY_REQUEST,
     FETCH_NFTY_SUCCESS
 } from './nftyTypes'
 

@@ -8,6 +8,7 @@ import Header from './HeaderComponent';
 import {Input, Button} from 'reactstrap';
 import {fetchNfty} from '../redux/nftyData/nftyAction';
 import {fetchStock} from '../redux/stockData/stockActions';
+import NftyComponent from './NftyComponent';
 
 
 const StockComponent = ({dailyStock:{dailyStock}, fetchStock}) => {
@@ -44,9 +45,11 @@ const StockComponent = ({dailyStock:{dailyStock}, fetchStock}) => {
                 <option value="AMZN">AMZN</option>
             </Input>
             {dailyStock ? displayTheChart() : null}
+            <NftyComponent />
             <Link to={`/nfty`}>
                 <Button outline="none" color="danger" >Click to see nfty stock</Button>
             </Link>
+            
         </div>
         </>
     )

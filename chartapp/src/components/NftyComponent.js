@@ -8,14 +8,13 @@ import {fetchNfty} from '../redux/nftyData/nftyAction';
 
 
 const NftyComponent = ({nftyStock:{nftyStock}, fetchNfty}) => {
-   
-   
+    
     useEffect(() => {
         fetchNfty('nfty');
     }, []);
 
     
-
+    
 
     const displayTheNfty = () => {
         return(
@@ -26,7 +25,7 @@ const NftyComponent = ({nftyStock:{nftyStock}, fetchNfty}) => {
     
     return(
         <>
-        <Header />
+        
         <div className="container">
             <h1>Average Stock</h1>
             {nftyStock ? displayTheNfty() : null}

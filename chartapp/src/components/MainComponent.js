@@ -9,7 +9,7 @@ const Main = () => {
     return(
         <Switch>
             <Route exact path ="/" component={StockComponent} />
-            <Route path="/nfty" component={NftyComponent} />
+            
         </Switch>
     )
 }
