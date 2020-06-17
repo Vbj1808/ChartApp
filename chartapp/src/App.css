@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-color: black;
 }
 
 .App-logo {
@@ -43,4 +44,19 @@
 
 .head{
   font-family: 'Montserrat', sans-serif;
+  
+}
+
+.jumbotron{
+  background-color: #333;
+  text-align: left;
+  color: wheat;
+}
+
+.align{
+  margin: 20px;
+}
+
+.text{
+  color: wheat;
 }

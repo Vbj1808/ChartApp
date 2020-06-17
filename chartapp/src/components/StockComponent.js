@@ -39,18 +39,17 @@ const StockComponent = ({dailyStock:{dailyStock}, fetchStock}) => {
         <>
         <Header />
         <div className="container">
-            <Input type="select" defaultValue={symbol} onChange={handleSelect}>
+            <Input type="select" className="align" defaultValue={symbol} onChange={handleSelect}>
                 <option selected value="IBM">IBM</option>
-                <option value="TSLA">TSLA</option>
+                <option value="MSFT">MSFT</option>
                 <option value="AMZN">AMZN</option>
             </Input>
+        
             {dailyStock ? displayTheChart() : null}
             <NftyComponent />
-            <Link to={`/nfty`}>
-                <Button outline="none" color="danger" >Click to see nfty stock</Button>
-            </Link>
             
-        </div>
+        </div>    
+        
         </>
     )
 }

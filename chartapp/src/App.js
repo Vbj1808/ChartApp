@@ -9,13 +9,13 @@ import {BrowserRouter} from 'react-router-dom';
 
 function App() {
   return (
-    <Provider store={store}>
+    
       <BrowserRouter>
         <div className="App">
           <Main />
         </div>
       </BrowserRouter>
-    </Provider>
+   
   );
 }
 

@@ -1,46 +1,20 @@
 import {
-    FETCH_STOCK_SUCCESS,
-    FETCH_STOCK_FAILURE,
-    FETCH_STOCK_REQUEST
+    FETCH_STOCK_SUCCESS
 } from './stockTypes'
 
 const initialState = {
-    loading: false,
-    dailyStock: null,
-    errMess: null 
+    dailyStock: null 
 };
 
 export default function (state = initialState, action){
-    const {payload} = action;
+    const {type, payload} = action;
 
-    switch(action.type){
-        case FETCH_STOCK_REQUEST:
-            return{
-                ...state,
-                loading: true,
-                dailyStock: [],
-                errMess: null 
-            }
-        
-        case FETCH_STOCK_SUCCESS:
-            return{
-                ...state,
-                loading: false,
-                dailyStock: payload,
-                errMess: null 
-            }
-
-        case FETCH_STOCK_FAILURE:
-            return{
-                ...state,
-                loading: false,
-                dailyStock: [],
-                errMess: payload
-            }
-        default:
-            return state;
+    if(type === FETCH_STOCK_SUCCESS){
+        return{
+            ...state,
+            dailyStock: payload
+        };
+    }else{
+        return state 
     }
-
-
-    
 }

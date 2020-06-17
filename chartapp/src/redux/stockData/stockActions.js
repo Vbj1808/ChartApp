@@ -1,8 +1,7 @@
-import axios from 'axios'
 import {
-    FETCH_STOCK_FAILURE,
+    
     FETCH_STOCK_SUCCESS,
-    FETCH_STOCK_REQUEST
+    
 } from './stockTypes'
 
 function prepareDate(d){
@@ -41,7 +40,7 @@ export const fetchStock = (symbol) => async dispatch => {
                         stockChartOpenValues.push(Number(data['Time Series (Daily)'][key]['1. open']));
                         stockChartHighValues.push(Number(data['Time Series (Daily)'][key]['2. high']));
                         stockChartLowValues.push(Number(data['Time Series (Daily)'][key]['3. low']));
-                        stockChartVolumeValues.push(Number(data['Time Series (Daily)'][key]['6. volume']));
+                        stockChartVolumeValues.push(Number(data['Time Series (Daily)'][key]['5. volume']));
 
                     }
                 }

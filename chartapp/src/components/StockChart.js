@@ -7,10 +7,10 @@ const StockChart = ({dailyStock,dailyStockName}) => {
     console.log(dailyStock.stockChartCloseData);
     console.log(dailyStock.stockChartXData);
     
-    var ohlc = [];
-    var volume = [];
-    var dataLength = dailyStock.stockChartXData.length;
-    var i = 0;
+    var ohlc = [],
+     volume = [],
+     dataLength = dailyStock.stockChartXData.length,
+     i = 0;
     
     console.log(dataLength);
     
@@ -32,6 +32,7 @@ const StockChart = ({dailyStock,dailyStockName}) => {
         ]);
     }
 
+    console.log(volume);
     
 
     const options = {
@@ -116,8 +117,7 @@ const StockChart = ({dailyStock,dailyStockName}) => {
     }
     
     return(
-        <HighchartsReact highcharts={Highcharts} constructorType={'stockChart'} allowChartUpdate = { true } options={options} />
-        
+        <HighchartsReact highcharts={Highcharts} constructorType={'stockChart'} allowChartUpdate = {true} options={options} />
     )
 }
 

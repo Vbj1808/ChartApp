@@ -27,7 +27,7 @@ const NftyComponent = ({nftyStock:{nftyStock}, fetchNfty}) => {
         <>
         
         <div className="container">
-            <h1>Average Stock</h1>
+            <h1 className="text">NFTY Stock</h1>
             {nftyStock ? displayTheNfty() : null}
         </div>
         </>
