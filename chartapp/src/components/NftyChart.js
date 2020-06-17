@@ -93,7 +93,7 @@ const NftyChart = ({nftyStock,nftyStockName}) => {
             data: ohlc,
         },{
             type: 'column',
-            id: `{dailyStock.symbol}-volume`,
+            id: `{nftyStock.symbol}-volume`,
             name: nftyStock.symbol,
             data: volume,
             yAxis: 1
